@@ -1,0 +1,11 @@
+#!/bin/bash
+
+command -v yq >/dev/null
+if [[ $? -eq 1 ]]; then
+    echo "[1;31mError: yq not found![0m please install at [1;31mhttps://github.com/mikefarah/yq[0m." >&2
+fi
+
+command -v docker >/dev/null
+if [[ $? -eq 1 ]]; then
+    echo "[1;31mError: docker not found![0m please install [1;31mdocker[0m." >&2
+fi

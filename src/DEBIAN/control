@@ -1,0 +1,7 @@
+Package: siakhooi-image-runner
+Version: 1.0.0
+Maintainer: Siak Hooi <siakhooi@gmail.com>
+Depends: bash, coreutils, man-db, sed
+Architecture: amd64
+Homepage: <https://github.com/siakhooi/image-runner>
+Description: Programs to run container images for dev/testing purposes.

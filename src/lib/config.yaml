@@ -1,0 +1,7 @@
+run-linux:
+  run-ubuntu:
+    image: ubuntu
+    command: bash
+  run-debian:
+    image: debian
+    command: bash
