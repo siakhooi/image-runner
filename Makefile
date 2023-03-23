@@ -18,10 +18,26 @@ delete-tags:
 terminalizer:
 	terminalizer render docs/terminalizer-image-sitter.yml
 
-docker-ubuntu-bash:
-	docker run --rm -it -w /working -v $$(pwd):/working ubuntu bash
-#	. in-container-init.sh
+run-in-container:
+	. in-container-init.sh
 
-docker-debian-bash:
-	docker run --rm -it -w /working -v $$(pwd):/working debian bash
-#	. in-container-init.sh
+test:
+	run-debian
+	run-ubuntu
+	run-alpine
+	run-busybox
+	run-fedora
+	run-almalinux
+	run-amazonlinux
+	run-archlinux
+	run-linux
+
+	man run-debian
+	man run-ubuntu
+	man run-alpine
+	man run-busybox
+	man run-fedora
+	man run-almalinux
+	man run-amazonlinux
+	man run-archlinux
+	man run-linux

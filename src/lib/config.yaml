@@ -5,3 +5,21 @@ run-linux:
   run-debian:
     image: debian
     command: bash
+  run-alpine:
+    image: alpine
+    command: sh
+  run-busybox:
+    image: busybox
+    command: sh
+  run-fedora:
+    image: fedora
+    command: bash
+  run-almalinux:
+    image: almalinux
+    command: bash
+  run-amazonlinux:
+    image: amazonlinux
+    command: bash
+  run-archlinux:
+    image: archlinux
+    command: bash
