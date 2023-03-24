@@ -24,6 +24,8 @@ run-archlinux [workingDirectory]
 run-linux
 ```
 
+👉Visit [Screenshots](screenshots/Screenshots.md) of each commands.
+
 ## Quick Start
 
 ### Installation
