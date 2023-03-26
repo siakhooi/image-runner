@@ -15,3 +15,7 @@
 ## run-busybox
 
 ![run-busybox](run-busybox.gif "run-busybox")
+
+## run-fedora
+
+![run-fedora](run-fedora.gif "run-fedora")

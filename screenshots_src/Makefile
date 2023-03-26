@@ -23,3 +23,10 @@ run-busybox:
 	ls /etc
 	which busybox
 	exit
+
+run-fedora:
+	cd /tmp
+	run-fedora
+	cat /etc/fedora-release
+	cat /etc/os-release
+	exit
