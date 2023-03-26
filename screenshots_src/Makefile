@@ -17,4 +17,9 @@ run-alpine:
 	cat /etc/alpine-release
 	cat /etc/os-release
 	exit
-	
+
+run-busybox:
+	run-busybox /tmp
+	ls /etc
+	which busybox
+	exit
