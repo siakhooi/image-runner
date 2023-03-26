@@ -37,3 +37,9 @@ run-almalinux:
 	cat /etc/almalinux-release
 	cat /etc/os-release
 	exit
+
+run-amazonlinux:
+	run-amazonlinux /tmp
+	cat /etc/amazon-linux-release
+	cat /etc/os-release
+	exit

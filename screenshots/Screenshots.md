@@ -23,3 +23,7 @@
 ## run-almalinux
 
 ![run-almalinux](run-almalinux.gif "run-almalinux")
+
+## run-amazonlinux
+
+![run-amazonlinux](run-amazonlinux.gif "run-amazonlinux")
