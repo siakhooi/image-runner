@@ -19,3 +19,7 @@
 ## run-fedora
 
 ![run-fedora](run-fedora.gif "run-fedora")
+
+## run-almalinux
+
+![run-almalinux](run-almalinux.gif "run-almalinux")

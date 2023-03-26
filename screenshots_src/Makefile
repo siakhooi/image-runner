@@ -30,3 +30,10 @@ run-fedora:
 	cat /etc/fedora-release
 	cat /etc/os-release
 	exit
+
+run-almalinux:
+	cd /tmp
+	run-almalinux
+	cat /etc/almalinux-release
+	cat /etc/os-release
+	exit
