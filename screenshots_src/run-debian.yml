@@ -263,4 +263,3 @@ records:
     content: "$ "
   - delay: 5000
     content: "\r\n"
-
