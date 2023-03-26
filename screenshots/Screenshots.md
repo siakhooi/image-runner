@@ -27,3 +27,7 @@
 ## run-amazonlinux
 
 ![run-amazonlinux](run-amazonlinux.gif "run-amazonlinux")
+
+## run-archlinux
+
+![run-archlinux](run-archlinux.gif "run-archlinux")

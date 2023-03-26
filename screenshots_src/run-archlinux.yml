@@ -1,0 +1,263 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /tmp
+
+  # Export additional ENV variables
+  env:
+    recording: true
+
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 70
+
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+
+  # Quality
+  # 1 - 100
+  quality: 100
+
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: null
+    title: null
+    style:
+      border: '16px #0C0C0C solid'
+      # boxShadow: none
+      # margin: 0px
+
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Cascadia Mono"
+
+  # The size of the font
+  fontSize: 12
+
+  # The height of lines
+  lineHeight: 1
+
+  # The spacing between letters
+  letterSpacing: 0
+
+  # Theme
+  theme:
+    background: "#0C0C0C"
+    foreground: "#CCCCCC"
+    cursor: "#FFFFFF"
+    black: "#0C0C0C"
+    red: "#C50F1F"
+    green: "#13A10E"
+    yellow: "#C19C00"
+    blue: "#0037DA"
+    magenta: "#881798"
+    cyan: "#3A96DD"
+    white: "#CCCCCC"
+    brightBlack: "#767676"
+    brightRed: "#E74856"
+    brightGreen: "#16C60C"
+    brightYellow: "#F9F1A5"
+    brightBlue: "#3B78FF"
+    brightMagenta: "#B4009E"
+    brightCyan: "#61D6D6"
+    brightWhite: "#F2F2F2"
+
+# Records, feel free to edit them
+records:
+  - delay: 10
+    content: "\r$ "
+  - delay: 100
+    content: r
+  - delay: 100
+    content: u
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: a
+  - delay: 100
+    content: r
+  - delay: 100
+    content: c
+  - delay: 100
+    content: h
+  - delay: 100
+    content: l
+  - delay: 100
+    content: i
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: u
+  - delay: 100
+    content: x
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: /
+  - delay: 100
+    content: t
+  - delay: 100
+    content: m
+  - delay: 100
+    content: p
+  - delay: 100
+    content: "\r\n\e[?2004l\r"
+  - delay: 100
+    content: "+ docker run --rm -it -w /working -v /tmp:/working archlinux bash\r\n"
+  - delay: 500
+    content: "\e]0;@233aff4c4a19:/working\a\e[?2004h[root@233aff4c4a19 working]# "
+  - delay: 100
+    content: l
+  - delay: 100
+    content: s
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: l
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: /
+  - delay: 100
+    content: e
+  - delay: 100
+    content: t
+  - delay: 100
+    content: c
+  - delay: 100
+    content: /
+  - delay: 100
+    content: a
+  - delay: 100
+    content: r
+  - delay: 100
+    content: c
+  - delay: 100
+    content: h
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: r
+  - delay: 100
+    content: e
+  - delay: 100
+    content: l
+  - delay: 100
+    content: e
+  - delay: 100
+    content: a
+  - delay: 100
+    content: s
+  - delay: 100
+    content: e
+  - delay: 100
+    content: "\r\n\e[?2004l\r-rw-r--r-- 1 root root 0 Jan 31 20:51 /etc/arch-release\r\n"
+  - delay: 10
+    content: "\e]0;@233aff4c4a19:/working\a\e[?2004h[root@233aff4c4a19 working]# "
+  - delay: 100
+    content: c
+  - delay: 100
+    content: a
+  - delay: 100
+    content: t
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: /
+  - delay: 100
+    content: e
+  - delay: 100
+    content: t
+  - delay: 100
+    content: c
+  - delay: 100
+    content: /
+  - delay: 100
+    content: o
+  - delay: 100
+    content: s
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: r
+  - delay: 100
+    content: e
+  - delay: 100
+    content: l
+  - delay: 100
+    content: e
+  - delay: 100
+    content: a
+  - delay: 100
+    content: s
+  - delay: 100
+    content: e
+  - delay: 100
+    content: "\r\n\e[?2004l\rNAME=\"Arch Linux\"\r\nPRETTY_NAME=\"Arch Linux\"\r\nID=arch\r\nBUILD_ID=rolling\r\nVERSION_ID=TEMPLATE_VERSION_ID\r\nANSI_COLOR=\"38;2;23;147;209\"\r\nHOME_URL=\"https://archlinux.org/\"\r\nDOCUMENTATION_URL=\"https://wiki.archlinux.org/\"\r\nSUPPORT_URL=\"https://bbs.archlinux.org/\"\r\nBUG_REPORT_URL=\"https://bugs.archlinux.org/\"\r\nPRIVACY_POLICY_URL=\"https://terms.archlinux.org/docs/privacy-policy/\"\r\nLOGO=archlinux-logo\r\n"
+  - delay: 100
+    content: "\e]0;@233aff4c4a19:/working\a\e[?2004h[root@233aff4c4a19 working]# "
+  - delay: 100
+    content: e
+  - delay: 100
+    content: x
+  - delay: 100
+    content: i
+  - delay: 100
+    content: t
+  - delay: 100
+    content: "\r\n\e[?2004l\rexit\r\n"
+  - delay: 150
+    content: "$ "
+  - delay: 5000
+    content: "\r\n"

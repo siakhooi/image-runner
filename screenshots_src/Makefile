@@ -43,3 +43,9 @@ run-amazonlinux:
 	cat /etc/amazon-linux-release
 	cat /etc/os-release
 	exit
+
+run-archlinux:
+	run-archlinux /tmp
+	ls -l /etc/arch-release
+	cat /etc/os-release
+	exit
