@@ -1,5 +1,5 @@
 clean:
-	rm -rf target *.deb
+	rm -rf target *.deb *.deb.*sum
 
 build:
 	./build.sh
