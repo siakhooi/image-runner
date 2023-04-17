@@ -30,7 +30,7 @@ run-linux - display this help.
 
 **run-linux** is a collection of scripts to run latest linux container with default shell for development/testing purposes.\
 Features: \
-\ \ - run latest container with shell, *bash* or *sh*.\
+\ \ - run latest container with shell, _bash_ or _sh_.\
 \ \ - mount a working directory as a directory in container.\
 \ \ - container clean up when exit.
 
@@ -55,3 +55,7 @@ MIT
 # BUGS
 
 Report bugs at <https://github.com/siakhooi/image-runner/issues>.
+
+# SEE ALSO
+
+run-image(1)

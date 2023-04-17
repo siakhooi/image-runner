@@ -1,0 +1,33 @@
+#!/bin/bash
+
+CONFIG_PATH=$HOME/.image-runner/config.yaml
+RUN_IMAGE_COMMAND=run-image
+RUN_IMAGE_BIN=$(command -v $RUN_IMAGE_COMMAND)
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $(basename "$0") binDirectory" >&2
+    exit 0
+fi
+
+if ! command -v $RUN_IMAGE_COMMAND >/dev/null; then
+    echo "Command $RUN_IMAGE_COMMAND not exists! Please install." >&2
+    exit 1
+fi
+
+BINDIRECTORY=$(realpath "$1")
+
+if [[ -e $BINDIRECTORY ]] && [[ ! -d $BINDIRECTORY ]]; then
+    echo "$1 is not a directory." >&2
+    exit 2
+fi
+
+[[ ! -d $BINDIRECTORY ]] && echo mkdir -p "$BINDIRECTORY"
+
+yq '.run-image|keys|.[]' "$CONFIG_PATH" | while read -r imageName; do
+
+    if [[ -e $BINDIRECTORY/$imageName ]] && [[ ! -L $BINDIRECTORY/$imageName ]]; then
+        echo "$BINDIRECTORY/$imageName is not a symbolic link." >&2
+    else
+        ln -s -f -v "$RUN_IMAGE_BIN" "$BINDIRECTORY/$imageName"
+    fi
+done

@@ -1,0 +1,62 @@
+#!/bin/bash
+
+CONFIG_PATH=$HOME/.image-runner/config.yaml
+
+PROGRAM_NAME=$(basename "$0")
+
+if [[ $PROGRAM_NAME == 'run-image' ]] && [[ $# -eq 0 ]]; then
+    man run-image
+    exit 0
+fi
+
+if [[ ! -f $CONFIG_PATH ]]; then
+    echo "Config file not exists! ($CONFIG_PATH)" >&2
+    exit 1
+fi
+
+if [[ $PROGRAM_NAME == 'run-image' ]]; then
+    if [[ $# -gt 0 ]] && [[ $# -lt 3 ]]; then
+        PROGRAM_NAME=$1
+        shift
+    else
+        echo "Usage: $(basename "$0") runImageName [workingDir]" >&2
+        exit 0
+    fi
+else
+    if [[ $# -gt 1 ]]; then
+        echo "Usage: $(basename "$0") [workingDir]" >&2
+        exit 0
+    fi
+fi
+
+# check if program_name exists
+IMAGE_YQ_PATH=".run-image.$PROGRAM_NAME.image"
+IMAGE_NAME=$(yq "$IMAGE_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+COMMAND_YQ_PATH=".run-image.$PROGRAM_NAME.command"
+IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+
+if [[ -z "$IMAGE_NAME" ]] ||
+    [[ -z "$IMAGE_COMMAND" ]]; then
+    echo "$PROGRAM_NAME is not configured." >&2
+    exit 2
+fi
+
+WORKINGDIR=/working
+HOSTDIR=$(pwd)
+CONTAINER_CMD=docker
+
+if [[ $# -eq 1 ]]; then
+    HOSTDIR=$(realpath "$1")
+    if [[ ! -d $HOSTDIR ]]; then
+        echo "Working Directory $HOSTDIR not exists!" >&2
+        exit 3
+    fi
+fi
+
+if ! command -v $CONTAINER_CMD >/dev/null; then
+    echo "Run Container Command ($CONTAINER_CMD) not exists! Please install." >&2
+    exit 4
+fi
+
+set -x
+$CONTAINER_CMD run --rm -it -w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR" "$IMAGE_NAME" "$IMAGE_COMMAND"
