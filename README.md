@@ -6,9 +6,15 @@ Image-Runner is a collection of scripts to run latest linux container with defau
 
 Features:
 
-- run latest container with shell.
-- mount a working directory as a directory in container.
-- container clean up when exit.
+- `run-linux`
+  - run latest container with shell.
+  - mount a working directory as a directory in container.
+  - container clean up when exit.
+- `run-image`
+  - run container based on configuration.
+  - mount a working directory as a directory in container.
+  - container clean up when exit.
+  - support using symbolic link to `run-image` for the configured program.
 
 ## Commands
 
@@ -22,6 +28,10 @@ run-almalinux [workingDirectory]
 run-amazonlinux [workingDirectory]
 run-archlinux [workingDirectory]
 run-linux
+
+run-image imageName [workingDirectory]
+<imageName> [workingDirectory]
+
 ```
 
 👉Visit [Screenshots](screenshots/Screenshots.md) of each commands.
