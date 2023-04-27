@@ -12,3 +12,6 @@ curl -L https://siakhooi.github.io/apt/siakhooi-apt.gpg  > /usr/share/keyrings/s
 apt update -y
 
 apt install -y $(ls ./siakhooi-image-runner_*_amd64.deb)
+
+mkdir $HOME/.image-runner
+run-image-sample-config >$HOME/.image-runner/config.yaml

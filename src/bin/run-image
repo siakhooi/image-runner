@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CONFIG_PATH=$HOME/.image-runner/config.yaml
+DEFAULT_WORKING_DIRECTORY=/working
 
 PROGRAM_NAME=$(basename "$0")
 
@@ -29,19 +30,21 @@ else
     fi
 fi
 
-# check if program_name exists
 IMAGE_YQ_PATH=".run-image.$PROGRAM_NAME.image"
 IMAGE_NAME=$(yq "$IMAGE_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 COMMAND_YQ_PATH=".run-image.$PROGRAM_NAME.command"
 IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+WORKINGDIR_YQ_PATH=".run-image.$PROGRAM_NAME.workingDirectory"
+WORKINGDIR=$(yq "$WORKINGDIR_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 
+# check if program_name exists
 if [[ -z "$IMAGE_NAME" ]] ||
     [[ -z "$IMAGE_COMMAND" ]]; then
     echo "$PROGRAM_NAME is not configured." >&2
     exit 2
 fi
 
-WORKINGDIR=/working
+WORKINGDIR=${WORKINGDIR:-$DEFAULT_WORKING_DIRECTORY}
 HOSTDIR=$(pwd)
 CONTAINER_CMD=docker
 

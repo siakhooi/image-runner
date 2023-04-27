@@ -5,4 +5,5 @@ run-image:
   run-oraclelinux:
     image: oraclelinux:9
     command: bash
+    workingDirectory: /tmp
 ___EOF___

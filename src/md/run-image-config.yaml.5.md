@@ -8,15 +8,20 @@
 # DESCRIPTION
 ~/.image-runner/config.yaml is config file in yaml format, with following available options:
 
-run-image:
-\ \ <program-name>:
-\ \ \ \ image: <container-name>
-\ \ \ \ command: <command-to-start>
+run-image:\
+\ \ \<program-name>:\
+\ \ \ \ image: \<container-name>\
+\ \ \ \ command: \<command-to-start>\
+\ \ \ \ workingDirectory: \<optional, container-directory-to-mount-to-host-working-directory, default to /tmp>
 
 # EXAMPLES
-run-image:
-\ \ run-oraclelinux:
-\ \ \ \ image: oraclelinux:9
+run-image:\
+\ \ run-oraclelinux:\
+\ \ \ \ image: oraclelinux:9\
+\ \ \ \ command: bash\
+\ \ \ \ workingDirectory: /tmp\
+\ \ run-oraclelinux2:\
+\ \ \ \ image: oraclelinux:9\
 \ \ \ \ command: bash
 
 # FILES
