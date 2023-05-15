@@ -13,8 +13,8 @@ cp -vr $SOURCE/DEBIAN $TARGET
 
 # Binary Files
 mkdir -p $TARGET/usr/bin
-chmod +x $SOURCE/bin/*
 cp -vr $SOURCE/bin $TARGET/usr
+chmod 755 $TARGET/usr/bin/*
 (
   cd $TARGET/usr/bin
   ln -s run-linux run-ubuntu
@@ -29,8 +29,8 @@ cp -vr $SOURCE/bin $TARGET/usr
 
 # Lib Files
 mkdir -p $TARGET/usr/lib/image-runner
-chmod +x $SOURCE/lib/*
 cp -vr $SOURCE/lib/* $TARGET/usr/lib/image-runner
+chmod 755 $TARGET/usr/lib/image-runner/*
 
 # Man Pages
 mkdir -p $TARGET/usr/share/man/man1/
@@ -38,7 +38,6 @@ pandoc $SOURCE/md/run-linux.1.md -s -t man | gzip -9 >$TARGET/usr/share/man/man1
 pandoc $SOURCE/md/run-image.1.md -s -t man | gzip -9 >$TARGET/usr/share/man/man1/run-image.1.gz
 pandoc $SOURCE/md/run-image-sample-config.1.md -s -t man | gzip -9 >$TARGET/usr/share/man/man1/run-image-sample-config.1.gz
 pandoc $SOURCE/md/run-image-build-links.1.md -s -t man | gzip -9 >$TARGET/usr/share/man/man1/run-image-build-links.1.gz
-
 
 mkdir -p $TARGET/usr/share/man/man5/
 pandoc $SOURCE/md/run-image-config.yaml.5.md -s -t man | gzip -9 >$TARGET/usr/share/man/man5/run-image-config.yaml.5.gz

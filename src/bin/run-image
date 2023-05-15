@@ -61,5 +61,21 @@ if ! command -v $CONTAINER_CMD >/dev/null; then
     exit 4
 fi
 
+OPTIONS=()
+OPTIONS+=(-w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR")
+
+IMAGE_VOLUMES_PATH='.run-image.'$PROGRAM_NAME'.volumes[]'
+readarray VOLUME_ARRAY < <(yq -o=j -I=0 "$IMAGE_VOLUMES_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+
+for v in "${VOLUME_ARRAY[@]}"; do
+    v=${v//[$'\t\r\n']/}
+
+    if [[ -n $v ]]; then
+        path=$(echo "$v" | yq '.path' -)
+        hostPath=$(echo "$v" | yq '.hostPath' -)
+        OPTIONS+=(-v "$hostPath":"$path")
+    fi
+done
+
 set -x
-$CONTAINER_CMD run --rm -it -w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR" "$IMAGE_NAME" "$IMAGE_COMMAND"
+$CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$IMAGE_NAME" "$IMAGE_COMMAND"

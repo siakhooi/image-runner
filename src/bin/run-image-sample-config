@@ -6,4 +6,7 @@ run-image:
     image: oraclelinux:9
     command: bash
     workingDirectory: /tmp
+    volumes:
+      - path: /var/run/docker.sock
+      - hostPath: /var/run/docker.sock
 ___EOF___

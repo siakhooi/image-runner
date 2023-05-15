@@ -12,7 +12,10 @@ run-image:\
 \ \ \<program-name>:\
 \ \ \ \ image: \<container-name>\
 \ \ \ \ command: \<command-to-start>\
-\ \ \ \ workingDirectory: \<optional, container-directory-to-mount-to-host-working-directory, default to /tmp>
+\ \ \ \ workingDirectory: \<optional, container-directory-to-mount-to-host-working-directory, default to /working>\
+\ \ \ \ volumes:\
+\ \ \ \ \ \ - path: \<path in container>\
+\ \ \ \ \ \ - hostPath: \<path in host>
 
 # EXAMPLES
 run-image:\
@@ -22,7 +25,10 @@ run-image:\
 \ \ \ \ workingDirectory: /tmp\
 \ \ run-oraclelinux2:\
 \ \ \ \ image: oraclelinux:9\
-\ \ \ \ command: bash
+\ \ \ \ command: bash\
+\ \ \ \ volumes:\
+\ \ \ \ \ \ - path: /var/run/docker.sock\
+\ \ \ \ \ \ - hostPath: /var/run/docker.sock
 
 # FILES
 ~/.image-runner/config.yaml

@@ -15,6 +15,7 @@ Features:
   - mount a working directory as a directory in container.
   - container clean up when exit.
   - support using symbolic link to `run-image` for the configured program.
+  - mount additional volumes.
 
 ## Commands
 

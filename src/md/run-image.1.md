@@ -17,7 +17,8 @@ run-image - run container image based on config file.
 Features: \
 \ \ - run configured container with configured command.\
 \ \ - mount a working directory as a directory in container.\
-\ \ - container clean up when exit.
+\ \ - container clean up when exit.\
+\ \ - mount additional volumes.
 
 **workingDirectory**
 : Directory to mount at /working, default to current directory
