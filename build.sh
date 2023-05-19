@@ -54,7 +54,7 @@ pandoc $SOURCE/md/run-image-config.yaml.5.md -s -t man | gzip -9 >$TARGET/usr/sh
   ln -s run-linux.1.gz run-archlinux.1.gz
 )
 
-dpkg-deb --build -Zxz $TARGET
+fakeroot dpkg-deb --build -Zxz $TARGET
 dpkg-name ${TARGET}.deb
 
 DEBFILE=$(ls ./*.deb)
