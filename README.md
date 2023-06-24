@@ -55,7 +55,6 @@ $ sudo apt install siakhooi-image-runner
 ## Deployments
 
 - <https://siakhooi.github.io/apt/>
-- <https://siakhooi.jfrog.io/ui/packages>
 
 ## Badges
 
