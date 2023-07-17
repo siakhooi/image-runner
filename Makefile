@@ -1,6 +1,9 @@
 clean:
 	rm -rf target *.deb *.deb.*sum
 
+prepare:
+	sudo apt update -y
+	sudo apt install -y shellcheck pandoc fakeroot
 build:
 	./build.sh
 

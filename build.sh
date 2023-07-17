@@ -10,6 +10,7 @@ mkdir "$TARGET"
 
 # Control File
 cp -vr $SOURCE/DEBIAN $TARGET
+chmod 755 $TARGET/DEBIAN/*
 
 # Binary Files
 mkdir -p $TARGET/usr/bin

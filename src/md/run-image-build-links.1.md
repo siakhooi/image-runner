@@ -8,11 +8,12 @@ run-image-build-links - create symbolic link for each program in the config file
 
 # SYNOPSIS
 
-**run-image-build-links** binDirectory
+**run-image-build-links** [binDirectory]
 
 # DESCRIPTION
 
-**run-image-build-links** create symbolic link for each program in the config file.
+**run-image-build-links** create symbolic link for each program in the config file.\
+if binDirectory, it will be defaulted to **$HOME/.bin**.
 
 # LICENSE
 
