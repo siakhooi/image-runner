@@ -47,4 +47,4 @@ Report bugs at <https://github.com/siakhooi/image-runner/issues>.
 
 # SEE ALSO
 
-run-linux(1), run-image-config.yaml(5), run-image-sample-config(5), run-image-build-links(1)
+run-linux(1), run-image-config.yaml(5), run-image-sample-config(5), run-image-build-links(1), run-image-list-links(1)

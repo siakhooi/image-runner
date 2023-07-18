@@ -8,11 +8,7 @@ build:
 	./build.sh
 
 test-man:
-	pandoc src/md/image-sitter-delete-if-exists.1.md -s -t man | man -l -
-	pandoc src/md/image-sitter-init.1.md -s -t man | man -l -
-	pandoc src/md/image-sitter-pull-always.1.md -s -t man | man -l -
-	pandoc src/md/image-sitter-pull-if-not-exists.1.md -s -t man | man -l -
-	pandoc src/md/image-sitter.1.md -s -t man | man -l -
+	pandoc src/md/run-image-list-links.1.md -s -t man | man -l -
 test-man-5:
 	pandoc src/md/run-image-config.yaml.5.md -s -t man | man -l -
 
