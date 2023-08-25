@@ -1,5 +1,5 @@
 Package: siakhooi-image-runner
-Version: 1.6.0
+Version: 1.7.0
 Maintainer: Siak Hooi <siakhooi@gmail.com>
 Depends: bash, coreutils, man-db, sed
 Architecture: amd64

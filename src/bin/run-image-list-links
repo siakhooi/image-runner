@@ -12,4 +12,4 @@ else
     BINDIRECTORY=$(realpath "$1")
 fi
 
-find "$BINDIRECTORY" -lname "$(which run-image)"
+find "$BINDIRECTORY" -lname "$(command -v run-image)"

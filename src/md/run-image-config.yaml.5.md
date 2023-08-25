@@ -13,6 +13,7 @@ run-image:\
 \ \ \ \ image: \<container-name>\
 \ \ \ \ command: \<command-to-start>\
 \ \ \ \ workingDirectory: \<optional, container-directory-to-mount-to-host-working-directory, default to /working>\
+\ \ \ \ network: \<network>\
 \ \ \ \ volumes:\
 \ \ \ \ \ \ - path: \<path in container>\
 \ \ \ \ \ \ - hostPath: \<path in host>
@@ -26,6 +27,7 @@ run-image:\
 \ \ run-oraclelinux2:\
 \ \ \ \ image: oraclelinux:9\
 \ \ \ \ command: bash\
+\ \ \ \ network: host\
 \ \ \ \ volumes:\
 \ \ \ \ \ \ - path: /var/run/docker.sock\
 \ \ \ \ \ \ - hostPath: /var/run/docker.sock

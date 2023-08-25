@@ -37,6 +37,9 @@ IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 WORKINGDIR_YQ_PATH=".run-image.$PROGRAM_NAME.workingDirectory"
 WORKINGDIR=$(yq "$WORKINGDIR_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 
+NETWORK_YQ_PATH=".run-image.$PROGRAM_NAME.network"
+IMAGE_NETWORK=$(yq "$NETWORK_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+
 # check if program_name exists
 if [[ -z "$IMAGE_NAME" ]] ||
     [[ -z "$IMAGE_COMMAND" ]]; then
@@ -63,6 +66,8 @@ fi
 
 OPTIONS=()
 OPTIONS+=(-w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR")
+
+[[ -n $IMAGE_NETWORK ]] && OPTIONS+=(--network "$IMAGE_NETWORK")
 
 IMAGE_VOLUMES_PATH='.run-image.'$PROGRAM_NAME'.volumes[]'
 readarray VOLUME_ARRAY < <(yq -o=j -I=0 "$IMAGE_VOLUMES_PATH" "$CONFIG_PATH" | sed 's/^null$//')
