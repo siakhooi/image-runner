@@ -7,11 +7,11 @@ wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O 
 
 yes | unminimize
 
-curl -L https://siakhooi.github.io/apt/siakhooi-apt.list > /etc/apt/sources.list.d/siakhooi-apt.list
-curl -L https://siakhooi.github.io/apt/siakhooi-apt.gpg  > /usr/share/keyrings/siakhooi-apt.gpg
+curl -L https://siakhooi.github.io/apt/siakhooi-apt.list >/etc/apt/sources.list.d/siakhooi-apt.list
+curl -L https://siakhooi.github.io/apt/siakhooi-apt.gpg >/usr/share/keyrings/siakhooi-apt.gpg
 apt update -y
 
-apt install -y $(ls ./siakhooi-image-runner_*_amd64.deb)
+apt install -y "$(ls ./siakhooi-image-runner_*_amd64.deb)"
 
-mkdir $HOME/.image-runner
-run-image-sample-config >$HOME/.image-runner/config.yaml
+mkdir "$HOME/.image-runner"
+run-image-sample-config >"$HOME/.image-runner/config.yaml"
