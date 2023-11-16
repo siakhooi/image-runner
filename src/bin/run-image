@@ -82,5 +82,11 @@ for v in "${VOLUME_ARRAY[@]}"; do
     fi
 done
 
+IMAGE_PORTS_PATH='.run-image.'$PROGRAM_NAME'.ports[]'
+readarray PORTS_ARRAY < <(yq "$IMAGE_PORTS_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+for v in "${PORTS_ARRAY[@]}"; do
+  OPTIONS+=(--publish "$v")
+done
+
 set -x
 $CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$IMAGE_NAME" "$IMAGE_COMMAND"
