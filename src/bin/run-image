@@ -34,6 +34,8 @@ IMAGE_YQ_PATH=".run-image.$PROGRAM_NAME.image"
 IMAGE_NAME=$(yq "$IMAGE_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 COMMAND_YQ_PATH=".run-image.$PROGRAM_NAME.command"
 IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+exec_command_yq_path=".run-image.$PROGRAM_NAME.execStartCommand"
+exec_command=$(yq "$exec_command_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
 WORKINGDIR_YQ_PATH=".run-image.$PROGRAM_NAME.workingDirectory"
 WORKINGDIR=$(yq "$WORKINGDIR_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
 
@@ -65,7 +67,7 @@ if ! command -v $CONTAINER_CMD >/dev/null; then
 fi
 
 OPTIONS=()
-OPTIONS+=(-w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR")
+OPTIONS+=(-w "$WORKINGDIR" -e WORKSPACE="$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR")
 
 [[ -n $IMAGE_NETWORK ]] && OPTIONS+=(--network "$IMAGE_NETWORK")
 
@@ -88,5 +90,14 @@ for v in "${PORTS_ARRAY[@]}"; do
   OPTIONS+=(--publish "$v")
 done
 
-set -x
-$CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$IMAGE_NAME" "$IMAGE_COMMAND"
+if [[ -z $exec_command ]]; then
+  set -x
+  $CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$IMAGE_NAME" "$IMAGE_COMMAND"
+else
+  INIT_COMMAND=$exec_command
+  CONTAINER_NAME="${PROGRAM_NAME}_$(date +%Y%m%d%H%M%S%N)"
+  set -x
+  $CONTAINER_CMD run --rm -t -d --name "$CONTAINER_NAME" "${OPTIONS[@]}" "$IMAGE_NAME" "$INIT_COMMAND"
+  $CONTAINER_CMD exec -it "$CONTAINER_NAME" "$IMAGE_COMMAND"
+  $CONTAINER_CMD kill "$CONTAINER_NAME"
+fi

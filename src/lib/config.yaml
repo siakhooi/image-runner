@@ -1,3 +1,15 @@
+run-image:
+  run-python:
+    image: python
+    command: bash
+    execStartCommand: cat
+    network: host
+    workingDirectory: /working
+    volumes:
+      - path: /opt/python/lib
+        hostPath: /opt/python/lib
+    ports:
+      - 8080:8080
 run-linux:
   run-ubuntu:
     image: ubuntu

@@ -11,7 +11,8 @@
 run-image:\
 \ \ \<program-name>:\
 \ \ \ \ image: \<container-name>\
-\ \ \ \ command: \<command-to-start>\
+\ \ \ \ command: \<command-to-start/exec-in>\
+\ \ \ \ execStartCommand: \<start-command-for-exec>\
 \ \ \ \ workingDirectory: \<optional, container-directory-to-mount-to-host-working-directory, default to /working>\
 \ \ \ \ network: \<network>\
 \ \ \ \ volumes:\
