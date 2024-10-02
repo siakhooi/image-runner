@@ -45,7 +45,6 @@ readonly exec_command
 
 readonly working_directory_yq_path=".run-image.${program_name}.workingDirectory"
 working_directory=$(yq "$working_directory_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
-readonly working_directory
 
 readonly image_network_yq_path=".run-image.$program_name.network"
 image_network=$(yq "$image_network_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
