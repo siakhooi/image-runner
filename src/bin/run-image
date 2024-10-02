@@ -1,104 +1,112 @@
 #!/bin/bash
 
-CONFIG_PATH=$HOME/.image-runner/config.yaml
-DEFAULT_WORKING_DIRECTORY=/working
+readonly CONFIG_PATH=$HOME/.image-runner/config.yaml
+readonly DEFAULT_WORKING_DIRECTORY=/working
+readonly CONTAINER_CMD=docker
 
-PROGRAM_NAME=$(basename "$0")
+program_name=$(basename "$0")
 
-if [[ $PROGRAM_NAME == 'run-image' ]] && [[ $# -eq 0 ]]; then
-    man run-image
-    exit 0
+if [[ $program_name == 'run-image' ]] && [[ $# -eq 0 ]]; then
+  man run-image
+  exit 0
 fi
 
 if [[ ! -f $CONFIG_PATH ]]; then
-    echo "Config file not exists! ($CONFIG_PATH)" >&2
-    exit 1
+  echo "Config file not exists! ($CONFIG_PATH)" >&2
+  exit 1
 fi
 
-if [[ $PROGRAM_NAME == 'run-image' ]]; then
-    if [[ $# -gt 0 ]] && [[ $# -lt 3 ]]; then
-        PROGRAM_NAME=$1
-        shift
-    else
-        echo "Usage: $(basename "$0") runImageName [workingDir]" >&2
-        exit 0
-    fi
+if [[ $program_name == 'run-image' ]]; then
+  if [[ $# -gt 0 ]] && [[ $# -lt 3 ]]; then
+    program_name=$1
+    shift
+  else
+    echo "Usage: $program_name runImageName [workingDir]" >&2
+    exit 0
+  fi
 else
-    if [[ $# -gt 1 ]]; then
-        echo "Usage: $(basename "$0") [workingDir]" >&2
-        exit 0
-    fi
+  if [[ $# -gt 1 ]]; then
+    echo "Usage: $program_name [workingDir]" >&2
+    exit 0
+  fi
 fi
 
-IMAGE_YQ_PATH=".run-image.$PROGRAM_NAME.image"
-IMAGE_NAME=$(yq "$IMAGE_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
-COMMAND_YQ_PATH=".run-image.$PROGRAM_NAME.command"
-IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
-exec_command_yq_path=".run-image.$PROGRAM_NAME.execStartCommand"
-exec_command=$(yq "$exec_command_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
-WORKINGDIR_YQ_PATH=".run-image.$PROGRAM_NAME.workingDirectory"
-WORKINGDIR=$(yq "$WORKINGDIR_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_name_yq_path=".run-image.${program_name}.image"
+image_name=$(yq "$image_name_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_name
 
-NETWORK_YQ_PATH=".run-image.$PROGRAM_NAME.network"
-IMAGE_NETWORK=$(yq "$NETWORK_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_command_yq_path=".run-image.${program_name}.command"
+image_command=$(yq "$image_command_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_command
+
+readonly exec_command_yq_path=".run-image.${program_name}.execStartCommand"
+exec_command=$(yq "$exec_command_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly exec_command
+
+readonly working_directory_yq_path=".run-image.${program_name}.workingDirectory"
+working_directory=$(yq "$working_directory_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly working_directory
+
+readonly image_network_yq_path=".run-image.$program_name.network"
+image_network=$(yq "$image_network_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_network
 
 # check if program_name exists
-if [[ -z "$IMAGE_NAME" ]] ||
-    [[ -z "$IMAGE_COMMAND" ]]; then
-    echo "$PROGRAM_NAME is not configured." >&2
-    exit 2
+if [[ -z "$image_name" ]] ||
+  [[ -z "$image_command" ]]; then
+  echo "$program_name is not configured." >&2
+  exit 2
 fi
 
-WORKINGDIR=${WORKINGDIR:-$DEFAULT_WORKING_DIRECTORY}
-HOSTDIR=$(pwd)
-CONTAINER_CMD=docker
+working_directory=${working_directory:-$DEFAULT_WORKING_DIRECTORY}
+host_directory=$(pwd)
 
 if [[ $# -eq 1 ]]; then
-    HOSTDIR=$(realpath "$1")
-    if [[ ! -d $HOSTDIR ]]; then
-        echo "Working Directory $HOSTDIR not exists!" >&2
-        exit 3
-    fi
+  host_directory=$(realpath "$1")
+  if [[ ! -d $host_directory ]]; then
+    echo "Working Directory $host_directory not exists!" >&2
+    exit 3
+  fi
 fi
 
 if ! command -v $CONTAINER_CMD >/dev/null; then
-    echo "Run Container Command ($CONTAINER_CMD) not exists! Please install." >&2
-    exit 4
+  echo "Run Container Command ($CONTAINER_CMD) not exists! Please install." >&2
+  exit 4
 fi
 
 OPTIONS=()
-OPTIONS+=(-w "$WORKINGDIR" -e WORKSPACE="$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR")
+OPTIONS+=(-w "$working_directory" -e WORKSPACE="$working_directory" -v "$host_directory":"$working_directory")
 
-[[ -n $IMAGE_NETWORK ]] && OPTIONS+=(--network "$IMAGE_NETWORK")
+[[ -n $image_network ]] && OPTIONS+=(--network "$image_network")
 
-IMAGE_VOLUMES_PATH='.run-image.'$PROGRAM_NAME'.volumes[]'
-readarray VOLUME_ARRAY < <(yq -o=j -I=0 "$IMAGE_VOLUMES_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_volumns_yq_path='.run-image.'$program_name'.volumes[]'
+readarray volumes < <(yq -o=j -I=0 "$image_volumns_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
 
-for v in "${VOLUME_ARRAY[@]}"; do
-    v=${v//[$'\t\r\n']/}
+for volume in "${volumes[@]}"; do
+  volume=${volume//[$'\t\r\n']/}
 
-    if [[ -n $v ]]; then
-        path=$(echo "$v" | yq '.path' -)
-        hostPath=$(echo "$v" | yq '.hostPath' -)
-        OPTIONS+=(-v "$hostPath":"$path")
-    fi
+  if [[ -n $volume ]]; then
+    path=$(echo "$volume" | yq '.path' -)
+    hostPath=$(echo "$volume" | yq '.hostPath' -)
+    OPTIONS+=(-v "$hostPath":"$path")
+  fi
 done
 
-IMAGE_PORTS_PATH='.run-image.'$PROGRAM_NAME'.ports[]'
-readarray PORTS_ARRAY < <(yq "$IMAGE_PORTS_PATH" "$CONFIG_PATH" | sed 's/^null$//')
-for v in "${PORTS_ARRAY[@]}"; do
-  v=${v//[$'\t\r\n']/}
-  OPTIONS+=(--publish "$v")
+image_ports_yq_path='.run-image.'$program_name'.ports[]'
+readarray ports < <(yq "$image_ports_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+for port in "${ports[@]}"; do
+  port=${port//[$'\t\r\n']/}
+  OPTIONS+=(--publish "$port")
 done
 
 if [[ -z $exec_command ]]; then
   set -x
-  $CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$IMAGE_NAME" "$IMAGE_COMMAND"
+  $CONTAINER_CMD run --rm -it "${OPTIONS[@]}" "$image_name" "$image_command"
 else
-  INIT_COMMAND=$exec_command
-  CONTAINER_NAME="${PROGRAM_NAME}_$(date +%Y%m%d%H%M%S%N)"
+  init_command=$exec_command
+  container_name="${program_name}_$(date +%Y%m%d%H%M%S%N)"
   set -x
-  $CONTAINER_CMD run --rm -t -d --name "$CONTAINER_NAME" "${OPTIONS[@]}" "$IMAGE_NAME" "$INIT_COMMAND"
-  $CONTAINER_CMD exec -it "$CONTAINER_NAME" "$IMAGE_COMMAND"
-  $CONTAINER_CMD kill "$CONTAINER_NAME"
+  $CONTAINER_CMD run --rm -t -d --name "$container_name" "${OPTIONS[@]}" "$image_name" "$init_command"
+  $CONTAINER_CMD exec -it "$container_name" "$image_command"
+  $CONTAINER_CMD kill "$container_name"
 fi

@@ -1,15 +1,15 @@
 #!/bin/bash
 
 if [[ $# -ne 0 ]] &&
-    [[ $# -ne 1 ]]; then
-    echo "Usage: $(basename "$0") [binDirectory]" >&2
-    exit 0
+  [[ $# -ne 1 ]]; then
+  echo "Usage: $(basename "$0") [binDirectory]" >&2
+  exit 0
 fi
 
 if [[ $# -eq 0 ]]; then
-    BINDIRECTORY=$(realpath "$HOME/.bin")
+  target_binary_directory=$(realpath "$HOME/.bin")
 else
-    BINDIRECTORY=$(realpath "$1")
+  target_binary_directory=$(realpath "$1")
 fi
 
-find "$BINDIRECTORY" -lname "$(command -v run-image)"
+find "$target_binary_directory" -lname "$(command -v run-image)"

@@ -1,22 +1,26 @@
-#!/bin/sh
+#!/bin/bash
+
 set -e
 
-PATH_TO_FILE=$(ls ./*.deb)
-DEBIAN_PACKAGE_SOURCE_PATH=$(realpath "$PATH_TO_FILE")
-DEBIAN_PACKAGE_FILE=$(basename "$PATH_TO_FILE")
+readonly TARGETURL="https://${PUBLISH_TO_APT_GITHUB_TOKEN}@github.com/siakhooi/apt.git"
+readonly TARGETBRANCH=main
+readonly TARGETPATH=docs/pool/main/binary-amd64
+readonly TARGETDIR=apt
+readonly TARGET_GIT_EMAIL=image-runner@siakhooi.github.io
+readonly TARGET_GIT_USERNAME=image-runner
 
-TMPDIR=$(mktemp -d)
-
-TARGETPATH=docs/pool/main/binary-amd64
-TARGETURL=https://${PUBLISH_TO_APT_GITHUB_TOKEN}@github.com/siakhooi/apt.git
-TARGETBRANCH=main
-TARGETDIR=apt
-TARGET_GIT_EMAIL=image-runner@siakhooi.github.io
-TARGET_GIT_USERNAME=image-runner
 TARGET_COMMIT_MESSAGE="image-runner: Auto deploy [$(date)]"
+readonly TARGET_COMMIT_MESSAGE
+
+deb_file_path=$(ls ./*.deb)
+debian_package_file_path=$(realpath "$deb_file_path")
+debian_package_file=$(basename "$deb_file_path")
+
+readonly target_debian_package_file_path="$TARGETPATH/$debian_package_file"
+working_directory=$(mktemp -d)
 
 (
-  cd "$TMPDIR" || exit 1
+  cd "$working_directory" || exit 1
   git config --global user.email "$TARGET_GIT_EMAIL"
   git config --global user.name "$TARGET_GIT_USERNAME"
 
@@ -25,8 +29,8 @@ TARGET_COMMIT_MESSAGE="image-runner: Auto deploy [$(date)]"
   git remote set-url origin "$TARGETURL"
   git restore --staged .
   mkdir -p $TARGETPATH
-  cp -v "$DEBIAN_PACKAGE_SOURCE_PATH" "$TARGETPATH/$DEBIAN_PACKAGE_FILE"
-  git add "$TARGETPATH/$DEBIAN_PACKAGE_FILE"
+  cp -v "$debian_package_file_path" "$target_debian_package_file_path"
+  git add "$target_debian_package_file_path"
   git status
   git commit -m "$TARGET_COMMIT_MESSAGE"
   git push

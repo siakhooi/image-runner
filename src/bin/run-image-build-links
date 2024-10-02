@@ -1,38 +1,39 @@
 #!/bin/bash
 
-CONFIG_PATH=$HOME/.image-runner/config.yaml
-RUN_IMAGE_COMMAND=run-image
+readonly CONFIG_PATH=$HOME/.image-runner/config.yaml
+readonly RUN_IMAGE_COMMAND=run-image
 RUN_IMAGE_BIN=$(command -v $RUN_IMAGE_COMMAND)
+readonly RUN_IMAGE_BIN
 
 if [[ $# -ne 0 ]] &&
-    [[ $# -ne 1 ]]; then
-    echo "Usage: $(basename "$0") [binDirectory]" >&2
-    exit 0
+  [[ $# -ne 1 ]]; then
+  echo "Usage: $(basename "$0") [binDirectory]" >&2
+  exit 0
 fi
 
 if ! command -v $RUN_IMAGE_COMMAND >/dev/null; then
-    echo "Command $RUN_IMAGE_COMMAND not exists! Please install." >&2
-    exit 1
+  echo "Command $RUN_IMAGE_COMMAND not exists! Please install." >&2
+  exit 1
 fi
 
 if [[ $# -eq 0 ]]; then
-    BINDIRECTORY=$(realpath "$HOME/.bin")
+  target_bin_directory=$(realpath "$HOME/.bin")
 else
-    BINDIRECTORY=$(realpath "$1")
+  target_bin_directory=$(realpath "$1")
 fi
 
-if [[ -e $BINDIRECTORY ]] && [[ ! -d $BINDIRECTORY ]]; then
-    echo "$1 is not a directory." >&2
-    exit 2
+if [[ -e $target_bin_directory ]] && [[ ! -d $target_bin_directory ]]; then
+  echo "$1 is not a directory." >&2
+  exit 2
 fi
 
-[[ ! -d $BINDIRECTORY ]] && echo mkdir -p "$BINDIRECTORY"
+[[ ! -d $target_bin_directory ]] && echo mkdir -p "$target_bin_directory"
 
 yq '.run-image|keys|.[]' "$CONFIG_PATH" | while read -r imageName; do
 
-    if [[ -e $BINDIRECTORY/$imageName ]] && [[ ! -L $BINDIRECTORY/$imageName ]]; then
-        echo "$BINDIRECTORY/$imageName is not a symbolic link." >&2
-    else
-        ln -s -f -v "$RUN_IMAGE_BIN" "$BINDIRECTORY/$imageName"
-    fi
+  if [[ -e $target_bin_directory/$imageName ]] && [[ ! -L $target_bin_directory/$imageName ]]; then
+    echo "$target_bin_directory/$imageName is not a symbolic link." >&2
+  else
+    ln -s -f -v "$RUN_IMAGE_BIN" "$target_bin_directory/$imageName"
+  fi
 done

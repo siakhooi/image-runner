@@ -1,47 +1,49 @@
 #!/bin/bash
 
-CONFIG_PATH=/usr/lib/image-runner/config.yaml
+readonly CONFIG_PATH=/usr/lib/image-runner/config.yaml
+readonly WORKINGDIR=/working
+readonly CONTAINER_CMD=docker
 
 PROGRAM_NAME=$(basename "$0")
 
 if [[ $PROGRAM_NAME == 'run-linux' ]]; then
-    man run-linux
-    exit 0
+  man run-linux
+  exit 0
 fi
 
 # check if program_name exists
-IMAGE_YQ_PATH=".run-linux.$PROGRAM_NAME.image"
-IMAGE_NAME=$(yq "$IMAGE_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
-COMMAND_YQ_PATH=".run-linux.$PROGRAM_NAME.command"
-IMAGE_COMMAND=$(yq "$COMMAND_YQ_PATH" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_name_yq_path=".run-linux.${PROGRAM_NAME}.image"
+image_name=$(yq "$image_name_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_name
+readonly image_command_yq_path=".run-linux.${PROGRAM_NAME}.command"
+image_command=$(yq "$image_command_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+readonly image_command
 
-if [[ -z "$IMAGE_NAME" ]] ||
-    [[ -z "$IMAGE_COMMAND" ]]; then
-    echo "$PROGRAM_NAME is not configured." >&2
-    exit 1
+if [[ -z "$image_name" ]] ||
+  [[ -z "$image_command" ]]; then
+  echo "$PROGRAM_NAME is not configured." >&2
+  exit 1
 fi
 
 if [[ $# -gt 1 ]]; then
-    echo "Usage: $(basename "$0") [workingDir]" >&2
-    exit 0
+  echo "Usage: $(basename "$0") [workingDir]" >&2
+  exit 0
 fi
 
-WORKINGDIR=/working
-HOSTDIR=$(pwd)
-CONTAINER_CMD=docker
+host_directory=$(pwd)
 
 if [[ $# -eq 1 ]]; then
-    HOSTDIR=$(realpath "$1")
-    if [[ ! -d $HOSTDIR ]]; then
-        echo "Working Directory $HOSTDIR not exists!" >&2
-        exit 2
-    fi
+  host_directory=$(realpath "$1")
+  if [[ ! -d $host_directory ]]; then
+    echo "Working Directory $host_directory not exists!" >&2
+    exit 2
+  fi
 fi
 
 if ! command -v $CONTAINER_CMD >/dev/null; then
-    echo "Run Container Command ($CONTAINER_CMD) not exists! Please install." >&2
-    exit 3
+  echo "Run Container Command ($CONTAINER_CMD) not exists! Please install." >&2
+  exit 3
 fi
 
 set -x
-$CONTAINER_CMD run --rm -it -w "$WORKINGDIR" -v "$HOSTDIR":"$WORKINGDIR" "$IMAGE_NAME" "$IMAGE_COMMAND"
+$CONTAINER_CMD run --rm -it -w "$WORKINGDIR" -v "$host_directory":"$WORKINGDIR" "$image_name" "$image_command"
