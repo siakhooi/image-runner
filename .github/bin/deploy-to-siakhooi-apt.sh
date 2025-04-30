@@ -2,7 +2,7 @@
 
 set -e
 
-readonly TARGETURL="https://${PUBLISH_TO_APT_GITHUB_TOKEN}@github.com/siakhooi/apt.git"
+readonly TARGETURL="https://${PUBLISH_TO_GITHUB_REPO_TOKEN}@github.com/siakhooi/apt.git"
 readonly TARGETBRANCH=main
 readonly TARGETPATH=docs/pool/main/binary-amd64
 readonly TARGETDIR=apt
