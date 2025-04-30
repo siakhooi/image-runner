@@ -1,4 +1,4 @@
-verify-all: clean update-version build
+all: clean update-version build
 
 clean:
 	rm -rf target *.deb *.deb.*sum

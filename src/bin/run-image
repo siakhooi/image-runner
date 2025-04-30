@@ -73,7 +73,8 @@ if ! command -v $CONTAINER_CMD >/dev/null; then
   exit 4
 fi
 
-OPTIONS=()
+# shellcheck disable=SC2206
+OPTIONS=($RUN_IMAGE_RUN_OPTIONS)
 OPTIONS+=(-w "$working_directory" -e WORKSPACE="$working_directory" -v "$host_directory":"$working_directory")
 
 [[ -n $image_network ]] && OPTIONS+=(--network "$image_network")
