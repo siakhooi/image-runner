@@ -46,6 +46,9 @@ readonly exec_command
 readonly working_directory_yq_path=".run-image.${program_name}.workingDirectory"
 working_directory=$(yq "$working_directory_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
 
+readonly runOptions_yq_path=".run-image.${program_name}.runOptions"
+runOptions=$(yq "$runOptions_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
+
 readonly image_network_yq_path=".run-image.$program_name.network"
 image_network=$(yq "$image_network_yq_path" "$CONFIG_PATH" | sed 's/^null$//')
 readonly image_network
@@ -75,6 +78,9 @@ fi
 
 # shellcheck disable=SC2206
 OPTIONS=($RUN_IMAGE_RUN_OPTIONS)
+# shellcheck disable=SC2206
+OPTIONS=($runOptions)
+
 OPTIONS+=(-w "$working_directory" -e WORKSPACE="$working_directory" -v "$host_directory":"$working_directory")
 
 [[ -n $image_network ]] && OPTIONS+=(--network "$image_network")

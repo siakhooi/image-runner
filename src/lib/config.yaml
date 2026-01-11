@@ -5,6 +5,7 @@ run-image:
     execStartCommand: cat
     network: host
     workingDirectory: /working
+    runOptions: --privileged
     volumes:
       - path: /opt/python/lib
         hostPath: /opt/python/lib

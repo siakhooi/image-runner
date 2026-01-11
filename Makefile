@@ -6,9 +6,9 @@ update-version:
 	bin/update-versions.sh
 build:
 	./build.sh
-commit-push:
+commit:
 	bin/git-commit-and-push.sh
-create-release:
+release:
 	bin/create-release.sh
 
 prepare:
