@@ -6,8 +6,6 @@ update-version:
 	bin/update-versions.sh
 build:
 	./build.sh
-commit:
-	bin/git-commit-and-push.sh
 release:
 	bin/create-release.sh
 
@@ -50,3 +48,8 @@ test:
 	man run-amazonlinux
 	man run-archlinux
 	man run-linux
+
+docker-build-rpm:
+	docker run --rm -v $(CURDIR):/workspaces docker.io/siakhooi/devcontainer:rpm44 scripts/build-rpms.sh
+docker-build-deb:
+	docker run --rm -v $(CURDIR):/workspaces docker.io/siakhooi/devcontainer:deb2604 scripts/build-deb.sh
