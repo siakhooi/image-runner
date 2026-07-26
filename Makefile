@@ -5,7 +5,7 @@ clean:
 shellcheck:
 	./scripts/shellcheck.sh
 update-version:
-	bin/update-versions.sh
+	./scripts/set-version.sh
 build:
 	./build.sh
 release:
