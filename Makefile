@@ -9,7 +9,7 @@ update-version:
 build:
 	./build.sh
 release:
-	bin/create-release.sh
+	./scripts/create-release.sh
 
 test-man:
 	pandoc src/md/run-image-list-links.1.md -s -t man | man -l -
