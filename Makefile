@@ -1,17 +1,15 @@
-all: clean update-version build
+all: clean update-version shellcheck build
 
 clean:
 	rm -rf target *.deb *.deb.*sum
+shellcheck:
+	./scripts/shellcheck.sh
 update-version:
 	bin/update-versions.sh
 build:
 	./build.sh
 release:
 	bin/create-release.sh
-
-prepare:
-	sudo apt update -y
-	sudo apt install -y shellcheck pandoc fakeroot
 
 test-man:
 	pandoc src/md/run-image-list-links.1.md -s -t man | man -l -

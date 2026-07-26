@@ -2,8 +2,6 @@
 
 set -e
 
-shellcheck src/bin/*
-
 readonly TARGET=target
 readonly SOURCE=src
 
