@@ -7,7 +7,7 @@ shellcheck:
 update-version:
 	./scripts/set-version.sh
 build:
-	./build.sh
+	./scripts/build.sh
 release:
 	./scripts/create-release.sh
 
