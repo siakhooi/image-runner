@@ -22,9 +22,6 @@ test-man-5:
 terminalizer:
 	terminalizer render docs/terminalizer-image-sitter.yml
 
-run-in-container:
-	. in-container-init.sh
-
 test:
 	run-debian
 	run-ubuntu
