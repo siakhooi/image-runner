@@ -2,7 +2,7 @@ repo: siakhooi/apt
 branch: main
 git_commit_user: image-runner
 git_commit_email: image-runner@siakhooi.github.io
-git_commit_message: "image-runner: Auto deploy"
+git_commit_message: "{repo_name}: {ref_name} | {commit_short}"
 
 files:
   - source: siakhooi-image-runner_*_amd64.deb
