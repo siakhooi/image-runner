@@ -64,6 +64,7 @@ link_binary() {
 		ln -s run-linux run-amazonlinux
 		ln -s run-linux run-archlinux
 		ln -s run-linux run-termux
+		ln -s run-linux run-rockylinux
 	)
 }
 generate_man_pages() {
@@ -88,6 +89,7 @@ generate_man_pages() {
 		ln -s run-linux.1.gz run-amazonlinux.1.gz
 		ln -s run-linux.1.gz run-archlinux.1.gz
 		ln -s run-linux.1.gz run-termux.1.gz
+		ln -s run-linux.1.gz run-rockylinux.1.gz
 	)
 
 }
