@@ -36,3 +36,6 @@ run-linux:
   run-archlinux:
     image: archlinux
     command: bash
+  run-termux:
+    image: termux/termux-docker
+    command: bash

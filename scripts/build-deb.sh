@@ -43,6 +43,7 @@ prepare_directory() {
 }
 copy_control_files() {
 	cp -vr $source_home/DEBIAN "$build_home"
+	chmod 755 "$build_home"/DEBIAN/postinst
 }
 copy_binary_files() {
 	readonly build_bin_home=$build_home/usr/bin
@@ -62,6 +63,7 @@ link_binary() {
 		ln -s run-linux run-almalinux
 		ln -s run-linux run-amazonlinux
 		ln -s run-linux run-archlinux
+		ln -s run-linux run-termux
 	)
 }
 generate_man_pages() {
@@ -85,6 +87,7 @@ generate_man_pages() {
 		ln -s run-linux.1.gz run-almalinux.1.gz
 		ln -s run-linux.1.gz run-amazonlinux.1.gz
 		ln -s run-linux.1.gz run-archlinux.1.gz
+		ln -s run-linux.1.gz run-termux.1.gz
 	)
 
 }
