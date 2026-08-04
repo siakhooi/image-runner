@@ -39,3 +39,6 @@ run-linux:
   run-termux:
     image: termux/termux-docker
     command: bash
+  run-rockylinux:
+    image: rockylinux:9
+    command: bash

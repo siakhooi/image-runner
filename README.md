@@ -28,6 +28,8 @@ run-fedora [workingDirectory]
 run-almalinux [workingDirectory]
 run-amazonlinux [workingDirectory]
 run-archlinux [workingDirectory]
+run-termux [workingDirectory]
+run-rockylinux [workingDirectory]
 run-linux
 
 run-image imageName [workingDirectory]
