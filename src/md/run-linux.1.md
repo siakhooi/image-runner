@@ -12,6 +12,7 @@ run-fedora - run latest fedora container with bash.\
 run-almalinux - run latest almalinux container with bash.\
 run-amazonlinux - run latest amazonlinux container with bash.\
 run-archlinux - run latest archlinux container with bash.\
+run-termmux - run latest termux container with bash.\
 run-linux - display this help.
 
 # SYNOPSIS
@@ -24,6 +25,7 @@ run-linux - display this help.
 **run-almalinux** [workingDirectory]\
 **run-amazonlinux** [workingDirectory]\
 **run-archlinux** [workingDirectory]\
+**run-termux** [workingDirectory]\
 **run-linux**
 
 # DESCRIPTION
